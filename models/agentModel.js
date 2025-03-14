@@ -1,4 +1,3 @@
-// Agent.js (Updated Agent Model)
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
@@ -6,16 +5,22 @@ const agentSchema = new mongoose.Schema({
     agentId: { 
         type: String, 
         default: () => uuidv4(), 
-        unique: true,
-        immutable: true
+        unique: true
     },
     name: { type: String, required: true },
     state: { type: String, default: 'inactive' },
-    lastConnection: Date,
-    remoteConfiguration: Boolean
+    lastConnection: { type: Date, default: Date.now },
+    remoteConfiguration: { type: Boolean, required: true }
 });
 
 
-agentSchema.index({ agentId: 1 }, { unique: true });
+agentSchema.pre('save', function (next) {
+    if (this.isModified('agentId')) {
+        throw new Error('Agent ID cannot be modified');
+    }
+    next();
+});
+
+// agentSchema.index({ agentId: 1 }, { unique: true });
 
 module.exports = mongoose.model('Agent', agentSchema);

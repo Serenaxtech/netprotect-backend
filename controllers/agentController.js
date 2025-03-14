@@ -12,7 +12,34 @@ class agentController {
         }
     }
 
+    async createAgent(req, res) {
+        try {
+            const { agent_name: name, accept_remote_config: remoteConfiguration } = req.body;
     
+            if (!name) {
+                return res.status(400).json({ message: 'Agent name is required' });
+            }
+    
+            const agent_data = { name, remoteConfiguration };
+    
+            const createdAgent = await agentAuthService.createAgent(agent_data);
+    
+            res.status(201).json(
+                {
+                    message: "success", 
+                    "data": {
+                        "agent_id": createdAgent.agentId,
+                        "agent_name": createdAgent.name
+                    }
+                }
+            );
+    
+        } catch (error) {
+            console.error('Error creating agent:', error); // Log the error for debugging
+            res.status(500).json({ message: 'Internal server error', error: error.message });
+        }
+    }
+
     async getAllAgents(req, res){
         try {
             console.log("Get All Agents")

@@ -11,13 +11,21 @@ class AgentService {
         return generateAuthToken();
     }
 
-    async createAgent(agent_data){
-        try{
-            const newAgent = new Agent(agent_data);
+    async createAgent(agent_data) {
+        try {
+            const agent_data_withtime = {
+                ...agent_data,
+                lastConnection: new Date().toISOString(), // Store as UTC ISO string
+            };
+
+            const newAgent = new Agent(agent_data_withtime);
             const savedAgent = await newAgent.save();
 
+            return savedAgent;
+
         } catch (error) {
-            throw new Error(`Error creating user: ${error.message}`);
+            console.error('Error creating agent:', error);
+            throw new Error(`Error creating agent: ${error.message}`);
         }
     }
 }
