@@ -1,4 +1,4 @@
-const agentAuthService = require('../services/agentAuthService');
+const agentAuthService = require('../services/agentService');
 
 
 class agentController {
@@ -12,6 +12,7 @@ class agentController {
         }
     }
 
+    
     async getAllAgents(req, res){
         try {
             console.log("Get All Agents")
