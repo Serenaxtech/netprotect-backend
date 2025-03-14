@@ -22,14 +22,17 @@ class agentController {
     
             const agent_data = { name, remoteConfiguration };
     
-            const createdAgent = await agentService.createAgent(agent_data);
+            const { created_agent, agent_token } = await agentService.createAgent(agent_data);
+
+            console.log(created_agent);
     
             res.status(201).json(
                 {
-                    message: "success", 
+                    message: "success",
                     "data": {
-                        "agent_id": createdAgent.agentId,
-                        "agent_name": createdAgent.name
+                        "agent_id": created_agent.agentId,
+                        "agent_name": created_agent.name,
+                        "agent_token": agent_token
                     }
                 }
             );
@@ -209,27 +212,32 @@ class agentController {
         }
     }
 
+    async revokeToken(req, res) {
+        try {
+            const { agent_id } = req.params;
 
-    
+            const { stopped_agent, revoked_token } = await agentService.revokeToken(agent_id);
 
-    // async getAgentAuthToken(req, res) {
-    //     try {
-            
-    //     } catch (error) {
-
-    //     }
-    // }
-
-    // async getAllCustomers(req, res) {
-    //     try {
-    //         // Fetch all customers from the service
-    //         const customers = await customerService.getAllCustomers();
-    //         res.json(customers);
-    //     } catch (error) {
-    //         console.error('Error fetching customers:', error);
-    //         res.status(500).json({ message: 'Internal server error' });
-    //     }
-    // }
+            res.status(200).json({
+                message: 'Token revoked successfully',
+                "data": {
+                    "agent_id": stopped_agent.agentId,
+                    "agent_name": stopped_agent.name,
+                    "agent_state": stopped_agent.state,
+                    "remote_config": stopped_agent.remoteConfiguration,
+                    "agent_last_connection": stopped_agent.lastConnection,
+                    "agent_token": revoked_token
+                },
+            });
+        
+        } catch (error) {
+            if (error.message === 'Token not found') {
+                return res.status(404).json({ message: 'Token not found' });
+            }
+            console.error('Error in revokeToken controller:', error);
+            res.status(500).json({ message: 'Internal server error', error: error.message });
+        }
+    }
 
 }
 

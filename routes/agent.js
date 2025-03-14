@@ -16,10 +16,13 @@ router.get('/all', agentController.getAllAgents);
 router.get('/:agent_id', agentController.getAgentById);
 
 // update this to be only admin access
-router.delete('/:agent_id', agentController.deleteAgentById);
+router.put('/:agent_id', agentController.updateAgentById);
 
 // update this to be only admin access
-router.put('/:agent_id', agentController.updateAgentById);
+router.get('/revoke/:agent_id', agentController.revokeToken);
+
+// update this to be only admin access
+router.delete('/:agent_id', agentController.deleteAgentById);
 
 // update this to be only admin access
 // I need to protect all endpoints from csrf attack !!!!!!!!

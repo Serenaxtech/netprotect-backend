@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const Agent = require('../models/agentModel')
+const AgentToken = require('../models/agentTokenModel')
 
 function generateAuthToken() {
     return crypto.randomBytes(32).toString('hex');
@@ -79,6 +80,23 @@ class AgentService {
         } 
     }
 
+    async createAgentToken(agent_id) {
+        try {
+            const token = generateAuthToken();
+
+            const newToken = new AgentToken({
+                agent: agent_id,
+                token: token, 
+            });
+
+            await newToken.save();
+            return token;
+        } catch (error) {
+            console.error('Error creating agent token:', error);
+            throw new Error(`Error creating agent token: ${error.message}`);
+        }
+    }
+
     async createAgent(agent_data) {
         try {
             const agent_data_withtime = {
@@ -88,8 +106,10 @@ class AgentService {
 
             const newAgent = new Agent(agent_data_withtime);
             const savedAgent = await newAgent.save();
+            
+            const plainTextToken = await this.createAgentToken(savedAgent._id);
 
-            return savedAgent;
+            return { created_agent: savedAgent, agent_token: plainTextToken };
 
         } catch (error) {
             console.error('Error creating agent:', error);
@@ -108,6 +128,36 @@ class AgentService {
         
         } catch (error) {
             console.error('Error deleting agent by agentId:', error);
+            throw error;
+        }
+    }
+
+    async revokeToken(agent_id) {
+        try {
+
+            const agent = await Agent.findOneAndUpdate(
+                {"agentId": agent_id},
+                {state: 'inactive'}
+            );
+
+            if (!agent) {
+                throw new Error('Agent not found');
+            }
+
+            const token = await AgentToken.findOneAndUpdate(
+                {"agent": agent._id},
+                { revoked: true, revokedAt: new Date() },
+                { new: true }
+            );
+
+            if (!token) {
+                throw new Error('Token not found');
+            }
+
+
+            return {stopped_agent: agent, revoked_token: token};
+        } catch (error) {
+            console.error('Error revoking token:', error);
             throw error;
         }
     }

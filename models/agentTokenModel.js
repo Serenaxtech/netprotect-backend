@@ -17,6 +17,17 @@ const tokenSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now,
     },
+
+    revoked: {
+        type: Boolean,
+        default: false
+    },
+
+    revokedAt: {
+        type: Date,
+        default: null
+    },
+
     lastUsed: Date
 });
 

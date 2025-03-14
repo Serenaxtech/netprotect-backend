@@ -8,7 +8,7 @@ const agentSchema = new mongoose.Schema({
         unique: true
     },
     name: { type: String, required: true },
-    state: { type: String, default: 'inactive' },
+    state: { type: String, default: 'active' },
     lastConnection: { type: Date, default: Date.now },
     remoteConfiguration: { type: Boolean, required: true }
 });
