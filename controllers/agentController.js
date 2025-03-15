@@ -239,6 +239,21 @@ class agentController {
         }
     }
 
+    async receiveData(req, res){
+        try {
+
+        } catch(error) {
+
+        }
+    }
+
+    async getConfigFile(req, res){
+        try {
+
+        } catch(error) {
+            
+        }
+    }
 }
 
 module.exports = new agentController();

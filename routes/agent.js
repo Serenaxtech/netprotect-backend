@@ -6,7 +6,7 @@ var router = express.Router();
 
 
 router.get('/', authenticateAgent, function(req, res, next) {
-    res.json({message: "Agent Auth "});
+    res.json({message: "Agent Authenticated"});
 });
 
 // update this to be only admin access
@@ -30,6 +30,14 @@ router.get('/checkin/:agent_id', agentController.updateAgentLastConnection);
 
 // update this to be only admin access
 router.get( '/token/create', agentController.createAgentAuthToken);
+
+
+// ? TO DO - Endpoint to receive data from the agent
+router.post( '/collector', agentController.receiveData);
+
+// ? TO DO - Endpoint to send the config file to the agent
+router.get( '/config', agentController.getConfigFile);
+
 
 router.post( '/create', agentController.createAgent);
 

@@ -134,7 +134,8 @@ class AgentService {
 
     async revokeToken(agent_id) {
         try {
-
+            // !! This can be better i don't need to revoke a token
+            // !! if it's already revoked
             const agent = await Agent.findOneAndUpdate(
                 {"agentId": agent_id},
                 {state: 'inactive'}
@@ -159,6 +160,22 @@ class AgentService {
         } catch (error) {
             console.error('Error revoking token:', error);
             throw error;
+        }
+    }
+
+    async receiveData(req, res){
+        try {
+
+        } catch(error) {
+
+        }
+    }
+
+    async getConfigFile(req, res){
+        try {
+
+        } catch(error) {
+            
         }
     }
 
