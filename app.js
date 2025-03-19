@@ -10,6 +10,7 @@ dotenv.config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const agentRouter = require('./routes/agent');
+const orgRouter = require('./routes/org');
 
 const app = express();
 
@@ -28,6 +29,7 @@ const authRouter = express.Router();
 
 apiV1Router.use('/', indexRouter);
 apiV1Router.use('/users', usersRouter);
+apiV1Router.use('/organization', orgRouter);
 
 authRouter.use('/agent', agentRouter);
 

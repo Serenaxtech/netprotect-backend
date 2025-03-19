@@ -15,7 +15,8 @@ const organizationSchema = new mongoose.Schema({
         trim: true
     },
     agentIds: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String, 
+        required: false,
         ref: 'Agent'
     }]
 }, { timestamps: true });

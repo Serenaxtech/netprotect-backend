@@ -100,7 +100,7 @@ class configFileController {
                 return res.status(400).json({ message: 'Invalid agentId format' });
             }
     
-            const deletedConfig = await configFileService.deleteConfigFile(agent_id);
+            const deletedConfig = await configFileService.deleteConfigFile(agent_id );
             
             res.status(200).json({ 
                 message: 'Config file deleted successfully', 
