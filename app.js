@@ -11,6 +11,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const agentRouter = require('./routes/agent');
 const orgRouter = require('./routes/org');
+const scanRouter = require('./routes/scan');
 
 const app = express();
 
@@ -30,6 +31,7 @@ const authRouter = express.Router();
 apiV1Router.use('/', indexRouter);
 apiV1Router.use('/users', usersRouter);
 apiV1Router.use('/organization', orgRouter);
+apiV1Router.use('/scan', scanRouter)
 
 authRouter.use('/agent', agentRouter);
 

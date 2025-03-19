@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "85f146d0-57d4-45b0-8100-4fd6128d7c60",
+		"name": "AD Protect API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32427873"
+	},
+	"item": [
+		{
+			"name": "Agent",
+			"item": [
+				{
+					"name": "Get Config File By Agent ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Config File By Agent ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"raw_config\": \"[test]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Config File By Agent ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"raw_config\": \"[agent]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Config File By Agent ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"raw_config\": \"[agent]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Org",
+			"item": [
+				{
+					"name": "Get All Organizations",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Create Organization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"admin_email\":\"pwc@gmail.com\",\r\n    \"organization_name\":\"PWC\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/organization/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Organization By ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"admin_email\":\"kpmg@gmail.com\",\r\n    \"organization_name\":\"KPMG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/organization/67da93567b2516bc52883121"
+					},
+					"response": []
+				},
+				{
+					"name": "Add Agent to Organization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"organization_name\":\"PWC1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/organization/67da9a2f3facef356427eaad/agent/93657d00-67e5-4904-abd6-14e39b552690"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Agent to Organization",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/api/v1/organization/67da9a2f3facef356427eaad/agent/93657d00-67e5-4904-abd6-14e39b552690"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Agents from Organization",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/api/v1/organization/67da9a2f3facef356427eaad/agent/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Organization By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"organization_name\":\"PWC1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/organization/67da93567b2516bc52883121"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scan",
+			"item": [
+				{
+					"name": "Create Scan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{URL}}/api/v1/scan/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Scan Results by Agent ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Latest Scan Result by Agent ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Latest Scan Result by Agent ID Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
