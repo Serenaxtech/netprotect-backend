@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const authService = require('../services/authService');
 const { SignupToken } = require('../models/signupTokenModel');
 const bcrypt = require('bcrypt');
 
@@ -31,8 +32,6 @@ class UserService {
         } else if (check_user.username === username) {
           throw new Error('A User With Similar Username Already Exists');
         }
-
-        
       }
 
       const new_user = new User({
@@ -53,6 +52,29 @@ class UserService {
       throw new Error(`${user_role} user creation failed: ${error.message}`);
     }
   }
+
+    
+  async loginUser(email, password) {
+    try {
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        throw new Error('User not found');
+      }
+  
+      const isValidPassword = await user.validatePassword(password);
+      console.log(isValidPassword);
+  
+      if (!isValidPassword) {
+        throw new Error('Invalid credentials');
+      }
+  
+      return user;
+    } catch (error) {
+      console.error('Error in loginUser:', error);
+      throw error;
+    }
+  }  
 
 }
 

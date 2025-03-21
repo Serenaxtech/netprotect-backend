@@ -11,4 +11,4 @@ const signupTokenSchema = new mongoose.Schema({
   expiresAt: { type: Date, required: true }
 });
 
-module.exports = mongoose.model('SignupToken', signupTokenSchema);
+module.exports = mongoose.model('SignupToken', signupTokenSchema); 

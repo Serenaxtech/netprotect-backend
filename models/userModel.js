@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
   password: { 
     type: String, 
     required: true,
-    set: (value) => bcrypt.hashSync(value, 10)
   },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -33,8 +32,21 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+
+  try {
+    console.log(this.password);
+    const trimmedPassword = this.password.trim();
+    this.password = await bcrypt.hash(trimmedPassword, 10);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 userSchema.methods.validatePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password.trim(), this.password);
 };
 
 module.exports = mongoose.model('User', userSchema);
