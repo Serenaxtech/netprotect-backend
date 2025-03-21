@@ -14,7 +14,7 @@ router.post('/integrator', authMiddleware, roleMiddleware('root'), userControlle
 router.post('/admin', authMiddleware, roleMiddleware('root'), userController.createAdminUser);
 router.post('/', authMiddleware, roleMiddleware('root', 'integrator', 'admin'), userController.createNormalUser);
 
-router.post('/login', /*roleMiddleware,*/ authController.login);
-router.get('/logout', /*roleMiddleware,*/ authController.logout);
+router.post('/login', authController.login);
+router.get('/logout', authMiddleware, authController.logout);
 
 module.exports = router;
