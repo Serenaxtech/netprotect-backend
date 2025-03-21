@@ -9,4 +9,6 @@ node app.js
 
 # Roadmap and Notes
 - I should encrypt the config file in the mongodb database
-- I should encrypt 
+- Encrypt Database Scan Result
+- Proper Auth for Agents on All Endpoints
+- Security Check for each endpoint

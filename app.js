@@ -8,10 +8,10 @@ const connectDB = require('./config/db');
 dotenv.config();
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const userRouter = require('./routes/user');
 const agentRouter = require('./routes/agent');
-const orgRouter = require('./routes/org');
 const scanRouter = require('./routes/scan');
+const orgRouter = require('./routes/org');
 
 const app = express();
 
@@ -29,9 +29,9 @@ const apiV1Router = express.Router();
 const authRouter = express.Router();
 
 apiV1Router.use('/', indexRouter);
-apiV1Router.use('/users', usersRouter);
+apiV1Router.use('/user', userRouter);
 apiV1Router.use('/organization', orgRouter);
-apiV1Router.use('/scan', scanRouter)
+apiV1Router.use('/scan', scanRouter);
 
 authRouter.use('/agent', agentRouter);
 
