@@ -24,7 +24,6 @@ class AuthController {
     }
   }
 
-  // Logout
   async logout(req, res) {
     try {
       res.clearCookie('auth_token');
@@ -34,27 +33,6 @@ class AuthController {
     }
   }
 
-  // Signup with token
-  async signup(req, res) {
-    try {
-      const { token } = req.query;
-      const { email, password, firstName, lastName, phoneNumber, role } = req.body;
-
-      // Validate signup token
-      const tokenPayload = await signupTokenService.validateSignupToken(token);
-      const { adminEmail, organization } = tokenPayload;
-
-      // Create user
-      const newUser = await userService.createUser(
-        { email, password, firstName, lastName, phoneNumber, role },
-        { adminEmail, organization }
-      );
-
-      res.status(201).json({ message: 'User created successfully', user: newUser });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  }
 }
 
 module.exports = new AuthController();

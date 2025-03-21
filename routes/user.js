@@ -14,5 +14,6 @@ router.post('/admin', /*roleMiddleware,*/ userController.createAdminUser);
 router.post('/', /*roleMiddleware,*/ userController.createNormalUser);
 
 router.post('/login', /*roleMiddleware,*/ authController.login);
+router.get('/logout', /*roleMiddleware,*/ authController.logout);
 
 module.exports = router;
