@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const Agent = require('../models/agentModel')
+const Org = require('../models/organizationModel')
 const AgentToken = require('../models/agentTokenModel')
 
 function generateAuthToken() {
@@ -15,6 +16,28 @@ class AgentService {
     async getAllAgents() {
         try {
             const agents = await Agent.find().lean();
+            
+            return agents;
+
+        } catch (error) {
+            console.error('Error fetching agents:', error);
+            throw new Error(`Error fetching agents: ${error.message}`);
+        }
+    }
+
+    async getAllAgentsByOrganizationId(org_id) {
+        try {
+            const organization = await Org.findById(org_id);
+
+            // console.log(organization);
+
+            const agents_id = organization.agentIds;
+
+            const agents = [];
+            for (const agent_id of agents_id) {
+                const agent = await Agent.find({ "agentId": agent_id }).lean();
+                agents.push(...agent);
+            }
             
             return agents;
 

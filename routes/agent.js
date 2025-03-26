@@ -1,5 +1,7 @@
 var express = require('express');
 const authenticateAgent = require('../middelwares/agentAuthMiddleware');
+const authMiddleware = require('../middelwares/authMiddleware');
+const roleMiddleware = require('../middelwares/roleMiddelware');
 const agentController = require('../controllers/agentController');
 const configFileController = require('../controllers/configFileController');
 
@@ -10,11 +12,15 @@ router.get('/', authenticateAgent, function(req, res, next) {
     res.json({message: "Agent Authenticated"});
 });
 
-// update this to be only admin access
-router.get('/all', agentController.getAllAgents);
+// Only root account
+router.get('/root/all',authMiddleware, roleMiddleware('root'), agentController.getAllAgents);
 
-// update this to be only admin access
-router.get('/:agent_id', agentController.getAgentById);
+// only admin and integrator accounts
+// This will get all the agents that an organization had (the organization id will be taken from the an Admin or User JWT Token)
+router.get('/all',authMiddleware, roleMiddleware('admin', 'integrator'), agentController.getAllAgentsByOrganizations);
+
+// Only admin account
+router.get('/:agent_id',authMiddleware, roleMiddleware('root', 'admin'), agentController.getAgentById);
 
 // update this to be only admin access
 router.put('/:agent_id', agentController.updateAgentById);

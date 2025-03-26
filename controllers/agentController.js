@@ -45,8 +45,36 @@ class agentController {
 
     async getAllAgents(req, res){
         try {
-            console.log("Get All Agents");
             const all_agents = await agentService.getAllAgents();
+
+            const all_agents_formatted = all_agents.map(agent => ({
+                agent_id: agent.agentId,
+                agent_name: agent.name
+            }));
+
+            res.status(200).json({
+                message: "success",
+                data: all_agents_formatted
+            });
+        
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
+
+
+    // For Admin and Integrator Users
+    async getAllAgentsByOrganizations(req, res){
+        try {
+
+            const all_agents = [];
+            
+            console.log(req.user.organizations);
+
+            for (const org_id of req.user.organizations) {
+                const agents = await agentService.getAllAgentsByOrganizationId(org_id);
+                all_agents.push(...agents);
+            }
 
             const all_agents_formatted = all_agents.map(agent => ({
                 agent_id: agent.agentId,
