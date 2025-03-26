@@ -14,13 +14,13 @@ class agentController {
 
     async createAgent(req, res) {
         try {
-            const { agent_name: name, accept_remote_config: remoteConfiguration } = req.body;
+            const { agent_name: name, accept_remote_config: remoteConfiguration, agent_organization: organizationId } = req.body;
     
             if (!name) {
                 return res.status(400).json({ message: 'Agent name is required' });
             }
     
-            const agent_data = { name, remoteConfiguration };
+            const agent_data = { name, remoteConfiguration, organizationId};
     
             const { created_agent, agent_token } = await agentService.createAgent(agent_data);
 

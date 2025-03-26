@@ -10,7 +10,12 @@ const agentSchema = new mongoose.Schema({
     name: { type: String, required: true },
     state: { type: String, default: 'active' },
     lastConnection: { type: Date, default: Date.now },
-    remoteConfiguration: { type: Boolean, required: true }
+    remoteConfiguration: { type: Boolean, required: true },
+    organizationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organization',
+        required: true
+    }
 });
 
 
