@@ -78,7 +78,8 @@ class agentController {
 
             const all_agents_formatted = all_agents.map(agent => ({
                 agent_id: agent.agentId,
-                agent_name: agent.name
+                agent_name: agent.name,
+                agent_organization: agent.organizationId
             }));
 
             res.status(200).json({
