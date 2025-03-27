@@ -68,14 +68,32 @@ class AgentService {
         }
     }
 
-    async updateAgentById(agent_id, updateData) {
+    async updateAgentById(agent_id, updateData, list_of_organizations, role) {
         try {
+
+            console.log(agent_id);
+            console.log(list_of_organizations);
+            console.log(role);
+            
+            const agent = await Agent.findOne({ "agentId": agent_id }).lean();
+            
+            if (!agent) {
+                throw new Error('Agent not found');
+            }
+
+            if ( !(role === 'root') ) {
+                if (!list_of_organizations.includes(agent.organizationId) ) {
+                    throw new Error('Agent not found');
+                }
+            }
+
             const updatedAgent = await Agent.findOneAndUpdate(
                 { "agentId": agent_id },
                 { $set: updateData }, 
                 { new: true, runValidators: true }
             ).lean();
 
+            console.log("hassan");
             if (!updatedAgent) {
                 throw new Error('Agent not found');
             }

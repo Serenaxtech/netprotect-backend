@@ -198,8 +198,12 @@ class agentController {
 
     async updateAgentById(req, res) {
         try {
+            const valid_states = ['active', 'inactive']
             const { agent_id } = req.params;
             const { agent_name, agent_state, agent_remote_config } = req.body;
+
+            const list_of_organizations = req.user.organizations;
+            const role = req.user.role;
 
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -208,16 +212,24 @@ class agentController {
             }
             
             const update_data = {};
+
+            if (!valid_states.includes(agent_state)) {
+                return res.status(400).json({error: 'invalid agent state'});
+            }
+
             if (agent_name !== undefined) update_data.name = agent_name;
-            if (agent_state !== undefined) update_data.state = agent_state;
+            if (agent_state !== undefined && role === 'root') update_data.state = agent_state;
+            
+
+
             // if (agent_last_connection !== undefined) update_data.lastConnection = agent_last_connection;
-            if (agent_remote_config !== undefined) update_data.remoteConfiguration = agent_remote_config;
+            if (agent_remote_config !== undefined && role == 'root') update_data.remoteConfiguration = agent_remote_config;
 
             if (Object.keys(update_data).length === 0) {
                 return res.status(400).json({ message: 'No fields to update' });
             }
             
-            const updated_agent = await agentService.updateAgentById(agent_id, update_data);
+            const updated_agent = await agentService.updateAgentById(agent_id, update_data, list_of_organizations, role);
 
             res.status(200).json(
                 { 
