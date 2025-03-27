@@ -21,10 +21,10 @@ router.get('/all',authMiddleware, roleMiddleware('admin', 'integrator'), agentCo
 
 // Get Agent By ID, this endpoint is for admin and integrator role
 router.get('/:agent_id', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.getAgentById);
-router.put('/:agent_id',  authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.updateAgentById);
+router.put('/:agent_id', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.updateAgentById);
 
-// update this to be only admin access
-router.get('/revoke/:agent_id', agentController.revokeToken);
+// Only root account can revoke tokens
+router.get('/revoke/:agent_id', authMiddleware, roleMiddleware('root'), agentController.revokeToken);
 
 // update this to be only admin access
 router.delete('/:agent_id', agentController.deleteAgentById);
