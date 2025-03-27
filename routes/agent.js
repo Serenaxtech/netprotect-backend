@@ -26,8 +26,9 @@ router.put('/:agent_id', authMiddleware, roleMiddleware('root', 'admin', 'integr
 // Only root account can revoke tokens
 router.get('/revoke/:agent_id', authMiddleware, roleMiddleware('root'), agentController.revokeToken);
 
-// update this to be only admin access
-router.delete('/:agent_id', agentController.deleteAgentById);
+// Only root account can delete agents
+// a client will need to contact us in order to remove an agent
+router.delete('/:agent_id', authMiddleware, roleMiddleware('root'), agentController.deleteAgentById);
 
 // update this to be only admin access
 // I need to protect all endpoints from csrf attack !!!!!!!!
