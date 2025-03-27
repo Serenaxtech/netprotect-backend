@@ -69,12 +69,7 @@ class AgentService {
     }
 
     async updateAgentById(agent_id, updateData, list_of_organizations, role) {
-        try {
-
-            console.log(agent_id);
-            console.log(list_of_organizations);
-            console.log(role);
-            
+        try { 
             const agent = await Agent.findOne({ "agentId": agent_id }).lean();
             
             if (!agent) {
@@ -93,7 +88,6 @@ class AgentService {
                 { new: true, runValidators: true }
             ).lean();
 
-            console.log("hassan");
             if (!updatedAgent) {
                 throw new Error('Agent not found');
             }

@@ -213,7 +213,7 @@ class agentController {
             
             const update_data = {};
 
-            if (!valid_states.includes(agent_state)) {
+            if (agent_state !== undefined && !valid_states.includes(agent_state)) {
                 return res.status(400).json({error: 'invalid agent state'});
             }
 
