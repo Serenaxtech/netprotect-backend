@@ -86,13 +86,19 @@ class AgentService {
         }
     }
 
-    async getAgentById(agent_id) {
+    async getAgentById(agent_id, list_of_organizations, role) {
         console.log(agent_id);
         try {
             const agent = await Agent.findOne({ "agentId": agent_id }).lean();
-
+            
             if (!agent) {
                 throw new Error('Agent not found');
+            }
+
+            if ( !(role === 'root') ) {
+                if (!list_of_organizations.includes(agent.organizationId) ) {
+                    throw new Error('Agent not found');
+                }
             }
 
             return agent;

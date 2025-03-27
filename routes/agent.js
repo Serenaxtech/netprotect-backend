@@ -19,11 +19,9 @@ router.get('/root/all',authMiddleware, roleMiddleware('root'), agentController.g
 // This will get all the agents that an organization had (the organization id will be taken from the an Admin or User JWT Token)
 router.get('/all',authMiddleware, roleMiddleware('admin', 'integrator'), agentController.getAllAgentsByOrganizations);
 
-// Only admin account
-router.get('/:agent_id',authMiddleware, roleMiddleware('root', 'admin'), agentController.getAgentById);
-
-// update this to be only admin access
-router.put('/:agent_id', agentController.updateAgentById);
+// Get Agent By ID, this endpoint is for admin and integrator role
+router.get('/:agent_id', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.getAgentById);
+router.put('/:agent_id',  authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.updateAgentById);
 
 // update this to be only admin access
 router.get('/revoke/:agent_id', agentController.revokeToken);

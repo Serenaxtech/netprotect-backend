@@ -96,6 +96,8 @@ class agentController {
         try {
 
             const { agent_id } = req.params;
+            const list_of_organizations = req.user.organizations;
+            const role = req.user.role;
 
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -103,7 +105,7 @@ class agentController {
                 return res.status(400).json({ message: 'Invalid agentId format' });
             }
 
-            const agent = await agentService.getAgentById(agent_id);
+            const agent = await agentService.getAgentById(agent_id, list_of_organizations, role);
 
             res.status(200).json(
                 {
