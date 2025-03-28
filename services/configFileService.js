@@ -1,4 +1,5 @@
 const ConfigFile = require('../models/configFileModel');
+const Org = require('../models/organizationModel');
 
 class ConfigService {
     async createConfigFile(agentId, rawConfig) {
@@ -19,13 +20,26 @@ class ConfigService {
         }
     }
 
-    async getConfigByAgentId(agentId) {
+    async getConfigByAgentId(agentId, organization_ids) {
         try {
-            const config = await ConfigFile.findOne({ agentId }).lean();
-            if (!config) {
-                throw new Error('Config file not found');
+            
+            const agent_ids = [];
+            for (const organization_id of organization_ids) {
+                const organization = await Org.findById(organization_id).lean();
+                agent_ids.push(...organization.agentIds);
             }
-            return config;
+
+            if (agent_ids.includes(agentId)) {
+                const config = await ConfigFile.findOne({ agentId }).lean();
+
+                if (!config) {
+                    throw new Error('Config file not found');
+                }
+                return config;
+            }
+
+            throw new Error('Agent does not exist');
+
         } catch (error) {
             console.error('Error fetching config file:', error);
             throw error;

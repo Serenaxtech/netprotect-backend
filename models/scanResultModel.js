@@ -10,10 +10,12 @@ const scanResultSchema = new mongoose.Schema({
         type: Object,
         required: true
     },
-    scanDate: {
+    
+    /*scanDate: {
         type: Date,
         default: Date.now 
-    },
+    },*/
+
     agentId: {
         type: String,
         required: true,

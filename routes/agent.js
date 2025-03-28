@@ -12,6 +12,8 @@ router.get('/', authenticateAgent, function(req, res, next) {
     res.json({message: "Agent Authenticated"});
 });
 
+router.post( '/create', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.createAgent);
+
 // Only root account
 router.get('/root/all',authMiddleware, roleMiddleware('root'), agentController.getAllAgents);
 
@@ -39,17 +41,17 @@ router.get('/checkin/:agent_id', authenticateAgent, agentController.updateAgentL
 router.get( '/token/create', authMiddleware, roleMiddleware('root'), agentController.createAgentAuthToken);
 
 
-// ? TO DO - Endpoint to receive data from the agent
+// this is replaced by the scan endpoint /api/v1/scan
 router.post( '/collector', authenticateAgent, agentController.receiveData);
 
 // ? TO DO - Endpoint to send the config file to the agent
 // ? if the remote configuration is allowed
-router.get( '/:agent_id/config', configFileController.getConfigByAgentId);
-router.post( '/:agent_id/config', configFileController.createConfigFile);
-router.put( '/:agent_id/config', configFileController.updateConfigFile);
-router.delete( '/:agent_id/config', configFileController.deleteConfigFile);
+router.get( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.getConfigByAgentId);
+router.post( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.createConfigFile);
+router.put( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.updateConfigFile);
+router.delete( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.deleteConfigFile);
 
-router.post( '/create', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.createAgent);
+
 
 
 module.exports = router;

@@ -1,12 +1,12 @@
 const ScanResult = require('../models/scanResultModel');
 
 class ScanResultService {
-    async createScanResult(scanName, scanResult, agentID) {
+    async createScanResult(scanName, scanResult, agentId) {
         try {
             const newScanResult = new ScanResult({
                 scanName,
                 scanResult,
-                agentID
+                agentId
             });
 
             const savedScanResult = await newScanResult.save();
