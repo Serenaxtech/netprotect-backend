@@ -34,8 +34,9 @@ router.delete('/:agent_id', authMiddleware, roleMiddleware('root'), agentControl
 // I need to protect all endpoints from csrf attack !!!!!!!!
 router.get('/checkin/:agent_id', authenticateAgent, agentController.updateAgentLastConnection);
 
-// update this to be only admin access
-router.get( '/token/create', agentController.createAgentAuthToken);
+// Only root user can create tokens manually for agents
+// this will not create an agent token object in the mongodb database
+router.get( '/token/create', authMiddleware, roleMiddleware('root'), agentController.createAgentAuthToken);
 
 
 // ? TO DO - Endpoint to receive data from the agent
@@ -48,7 +49,7 @@ router.post( '/:agent_id/config', configFileController.createConfigFile);
 router.put( '/:agent_id/config', configFileController.updateConfigFile);
 router.delete( '/:agent_id/config', configFileController.deleteConfigFile);
 
-router.post( '/create', agentController.createAgent);
+router.post( '/create', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.createAgent);
 
 
 module.exports = router;

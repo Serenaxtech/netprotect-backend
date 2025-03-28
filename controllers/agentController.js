@@ -5,7 +5,7 @@ class agentController {
     
     async createAgentAuthToken(req, res) {
         try {
-            const agentAuthToken = await agentService.createAgentToken();
+            const agentAuthToken = await agentService.generateAuthToken();
             res.json({"agent-token": agentAuthToken});
         } catch (error) {
             res.status(500).json({ message: 'Internal server error' });

@@ -1,4 +1,3 @@
-// AgentToken.js (New Token Model)
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 

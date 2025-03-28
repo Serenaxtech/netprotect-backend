@@ -3,14 +3,13 @@ const Agent = require('../models/agentModel')
 const Org = require('../models/organizationModel')
 const AgentToken = require('../models/agentTokenModel')
 
-function generateAuthToken() {
-    return crypto.randomBytes(32).toString('hex');
-}
+
 
 
 class AgentService {
-    async createAgentToken(){
-        return generateAuthToken();
+
+    async generateAuthToken() {
+        return crypto.randomBytes(32).toString('hex');
     }
 
     async getAllAgents() {
@@ -123,7 +122,7 @@ class AgentService {
 
     async createAgentToken(agent_id) {
         try {
-            const token = generateAuthToken();
+            const token = await this.generateAuthToken();
 
             const newToken = new AgentToken({
                 agent: agent_id,
