@@ -49,7 +49,7 @@ router.post( '/collector', authenticateAgent, agentController.receiveData);
 router.get( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.getConfigByAgentId);
 router.post( '/:agent_id/config', authMiddleware, roleMiddleware('root'), configFileController.createConfigFile);
 router.put( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.updateConfigFile);
-router.delete( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.deleteConfigFile);
+router.delete( '/:agent_id/config', authMiddleware, roleMiddleware('root'), configFileController.deleteConfigFile);
 
 
 
