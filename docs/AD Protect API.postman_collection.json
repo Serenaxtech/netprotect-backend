@@ -10,67 +10,204 @@
 			"name": "Agent",
 			"item": [
 				{
-					"name": "Get Config File By Agent ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
-					},
-					"response": []
+					"name": "Config",
+					"item": [
+						{
+							"name": "Get Config File By Agent ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+							},
+							"response": []
+						},
+						{
+							"name": "Create Config File By Agent ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"raw_config\": \"[agent]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Config File By Agent ID",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"raw_config\": \"[test1]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Config File By Agent ID",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"raw_config\": \"[agent]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
+							},
+							"response": []
+						}
+					]
 				},
 				{
-					"name": "Update Config File By Agent ID",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n     \"raw_config\": \"[test]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Management",
+					"item": [
+						{
+							"name": "Root",
+							"item": [
+								{
+									"name": "Get All Agents",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{URL}}/api/v1/agent/root/all"
+									},
+									"response": []
+								},
+								{
+									"name": "Create New Agent",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"agent_name\": \"Apple\", \r\n    \"accept_remote_config\": false, \r\n    \"agent_organization\": \"67da9a3d3facef356427eaaf\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{URL}}/api/v1/agent/create"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Agent By Agent ID",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Agent By Agent ID",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"agent_name\": \"Agent New Name 1\", \r\n    \"agent_state\": \"active 1\", \r\n    \"agent_remote_config\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{URL}}/api/v1/agent/7045d69b-089f-4ef2-99c4-dd409db1bdf1"
+									},
+									"response": []
+								},
+								{
+									"name": "Revoke Agent Token",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{URL}}/api/v1/agent/revoke/7045d69b-089f-4ef2-99c4-dd409db1bdf1"
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Agent By Agent ID",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": "{{URL}}/api/v1/agent/7045d69b-089f-4ef2-99c4-dd409db1bdf1"
+									},
+									"response": []
+								},
+								{
+									"name": "Create Agent Token",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{URL}}/api/v1/agent/token/create"
+									},
+									"response": []
 								}
-							}
+							]
 						},
-						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
-					},
-					"response": []
-				},
-				{
-					"name": "Create Config File By Agent ID",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n     \"raw_config\": \"[agent]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Admin and Integrator",
+							"item": [
+								{
+									"name": "Get Agent By Agent ID",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{URL}}/api/v1/agent/7045d69b-089f-4ef2-99c4-dd409db1bdf1"
+									},
+									"response": []
+								},
+								{
+									"name": "Get All Agents For Organization",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": "{{URL}}/api/v1/agent/all"
+									},
+									"response": []
+								},
+								{
+									"name": "Update Agent By Agent ID",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"agent_name\": \"Agent New Name 2\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "{{URL}}/api/v1/agent/7045d69b-089f-4ef2-99c4-dd409db1bdf1"
+									},
+									"response": []
 								}
-							}
-						},
-						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Config File By Agent ID",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n     \"raw_config\": \"[agent]\\nAgent-ID=93657d00-67e5-4904-abd6-14e39b552690\\nAgent-Name=PWC\\nAUTH-Token=14dae5d0780fb725e9fb57441adc5c89a7ddf3facc1fd22b68b3f7a3dfe691d5\\n\\n[adlab.local]\\nUsername = ADLAB\\\\ldapuser\\nPassword = UserPass1234!\\nLDAP-username = ldapuser@adlab.local\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config"
-					},
-					"response": []
+							]
+						}
+					]
 				}
 			]
 		},
@@ -81,7 +218,8 @@
 					"name": "Get All Organizations",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "{{URL}}/api/v1/organization/all"
 					},
 					"response": []
 				},
@@ -105,21 +243,9 @@
 				},
 				{
 					"name": "Get Organization By ID",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"admin_email\":\"kpmg@gmail.com\",\r\n    \"organization_name\":\"KPMG\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": "{{URL}}/api/v1/organization/67da93567b2516bc52883121"
 					},
 					"response": []
@@ -129,16 +255,7 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"organization_name\":\"PWC1\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{URL}}/api/v1/organization/67da9a2f3facef356427eaad/agent/93657d00-67e5-4904-abd6-14e39b552690"
+						"url": "{{URL}}/api/v1/organization/67da9a3d3facef356427eaaf/agent/7045d69b-089f-4ef2-99c4-dd409db1bdf1"
 					},
 					"response": []
 				},
@@ -163,18 +280,9 @@
 				{
 					"name": "Delete Organization By ID",
 					"request": {
-						"method": "PUT",
+						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"organization_name\":\"PWC1\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{URL}}/api/v1/organization/67da93567b2516bc52883121"
+						"url": "{{URL}}/api/v1/organization/67da94d37b2516bc52883125"
 					},
 					"response": []
 				}
@@ -188,7 +296,16 @@
 					"request": {
 						"method": "POST",
 						"header": [],
-						"url": "{{URL}}/api/v1/scan/"
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"scan_name\": \"test\",\r\n    \"scan_result\": \"scan result here\",\r\n    \"agent_id\": \"a58c779b-cdad-46ab-8e97-514ee60d97ac\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v1/scan"
 					},
 					"response": []
 				},
@@ -206,7 +323,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690"
+						"url": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690/latest"
 					},
 					"response": []
 				},
@@ -218,6 +335,102 @@
 						"url": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690"
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Sign In",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"integrator@hotmail.com\",\r\n    \"password\":\"hassan1230\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL}}/api/v1/user/login"
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{URL}}/api/v1/user/logout"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sign Up",
+					"item": [
+						{
+							"name": "Create Integrator User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"hassanalachek4\", \r\n    \"firstname\": \"Hassan\", \r\n    \"lastname\": \"AL ACHEK\", \r\n    \"email\": \"hassanalachek4@hotmail.com\", \r\n    \"phone_number\":\"96181656578\", \r\n    \"organizations\": [\r\n        \"67da9a2f3facef356427eaad\"\r\n    ], \r\n    \"password\": \"hassan123O\", \r\n    \"confirm_password\": \"hassan123O\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL}}/api/v1/user/integrator"
+							},
+							"response": []
+						},
+						{
+							"name": "Create  Admin User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"hassanalachek1\", \r\n    \"firstname\": \"Hassan\", \r\n    \"lastname\": \"AL ACHEK\", \r\n    \"email\": \"hassan@hotmail.com\", \r\n    \"phone_number\":\"96181656332\", \r\n    \"organizations\": [\r\n        \"67da9a2f3facef356427eaad\"\r\n    ], \r\n    \"password\": \"hassan123O\", \r\n    \"confirm_password\": \"hassan123O\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL}}/api/v1/user/"
+							},
+							"response": []
+						},
+						{
+							"name": "Create  Normal User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"hassanalachek\", \r\n    \"firstname\": \"Hassan\", \r\n    \"lastname\": \"AL ACHEK\", \r\n    \"email\": \"hassanalachek@hotmail.com\", \r\n    \"phone_number\":\"96181656332\", \r\n    \"organizations\": [\r\n        \"67da9a2f3facef356427eaad\"\r\n    ], \r\n    \"password\": \"hassan123O\", \r\n    \"confirm_password\": \"hassan123O\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL}}/api/v1/user/"
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
