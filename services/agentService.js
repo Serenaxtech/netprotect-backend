@@ -145,6 +145,11 @@ class AgentService {
             };
 
             const newAgent = new Agent(agent_data_withtime);
+
+            const agentOrganization = await Org.findById(agent_data.organizationId);
+            agentOrganization.agentIds.push(newAgent.agentId);
+            await agentOrganization.save();
+
             const savedAgent = await newAgent.save();
             
             const plainTextToken = await this.createAgentToken(savedAgent._id);

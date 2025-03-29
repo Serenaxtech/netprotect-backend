@@ -12,7 +12,7 @@ router.get('/', authenticateAgent, function(req, res, next) {
     res.json({message: "Agent Authenticated"});
 });
 
-router.post( '/create', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.createAgent);
+router.post( '/create', authMiddleware, roleMiddleware('root'), agentController.createAgent);
 
 // Only root account
 router.get('/root/all',authMiddleware, roleMiddleware('root'), agentController.getAllAgents);
