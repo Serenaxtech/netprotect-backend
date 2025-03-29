@@ -47,7 +47,7 @@ router.post( '/collector', authenticateAgent, agentController.receiveData);
 // ? TO DO - Endpoint to send the config file to the agent
 // ? if the remote configuration is allowed
 router.get( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.getConfigByAgentId);
-router.post( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.createConfigFile);
+router.post( '/:agent_id/config', authMiddleware, roleMiddleware('root'), configFileController.createConfigFile);
 router.put( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.updateConfigFile);
 router.delete( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.deleteConfigFile);
 
