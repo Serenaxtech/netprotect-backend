@@ -73,13 +73,15 @@ class configFileController {
 
             const  { raw_config } = req.body;
 
+            const organization_ids = req.user.organizations;
+
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     
             if (!uuidRegex.test(agent_id)) {
                 return res.status(400).json({ message: 'Invalid agentId format' });
             }
 
-            const updated_config = await configFileService.updateConfigFile(agent_id, raw_config);
+            const updated_config = await configFileService.updateConfigFile(agent_id, raw_config, organization_ids);
             res.status(200).json({ 
                 message: 'Config file updated successfully'
             });
@@ -97,6 +99,7 @@ class configFileController {
     async deleteConfigFile(req, res) {
         try {
             const { agent_id } = req.params;
+
     
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     

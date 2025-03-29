@@ -46,19 +46,30 @@ class ConfigService {
         }
     }
 
-    async updateConfigFile(agentId, rawConfig) {
+    async updateConfigFile(agentId, rawConfig, organization_ids) {
         try {
-            const updatedConfig = await ConfigFile.findOneAndUpdate(
-                { agentId },
-                { $set: { rawConfig, updatedAt: new Date() } },
-                { new: true }
-            );
 
-            if (!updatedConfig) {
-                throw new Error('Config file not found for this agentId');
+            const agent_ids = [];
+            for (const organization_id of organization_ids) {
+                const organization = await Org.findById(organization_id).lean();
+                agent_ids.push(...organization.agentIds);
             }
 
-            return updatedConfig;
+            if (agent_ids.includes(agentId)) {
+                const updatedConfig = await ConfigFile.findOneAndUpdate(
+                    { agentId },
+                    { $set: { rawConfig, updatedAt: new Date() } },
+                    { new: true }
+                );
+    
+                if (!updatedConfig) {
+                    throw new Error('Config file not found for this agentId');
+                }
+    
+                return updatedConfig;
+            }
+
+
         } catch (error) {
             console.error('Error updating config file:', error);
             throw error;
