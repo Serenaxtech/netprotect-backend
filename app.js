@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv'); 
 const connectDB = require('./config/db');
+const bodyParser = require('body-parser');
 
 dotenv.config();
 
@@ -15,6 +16,8 @@ const orgRouter = require('./routes/org');
 
 const app = express();
 
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
 
 // Connect to MongoDB
 connectDB();
