@@ -5,6 +5,8 @@ const logger = require('morgan');
 const dotenv = require('dotenv'); 
 const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpecs = require('./config/swagger');
 
 dotenv.config();
 
@@ -30,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const apiV1Router = express.Router();
 const authRouter = express.Router();
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 apiV1Router.use('/', indexRouter);
 apiV1Router.use('/user', userRouter);
