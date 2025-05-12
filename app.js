@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./config/swagger');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -17,6 +18,16 @@ const scanRouter = require('./routes/scan');
 const orgRouter = require('./routes/org');
 
 const app = express();
+
+// CORS Configuration - Move this to the top, before any routes
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
@@ -41,7 +52,6 @@ apiV1Router.use('/organization', orgRouter);
 apiV1Router.use('/scan', scanRouter);
 
 authRouter.use('/agent', agentRouter);
-
 
 app.use('/api/v1', apiV1Router);
 app.use('/api/v1', authRouter);

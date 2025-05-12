@@ -74,7 +74,24 @@ class UserService {
       console.error('Error in loginUser:', error);
       throw error;
     }
-  }  
+  }
+
+  async getUserById(userId) {
+    try {
+      const user = await User.findById(userId)
+        .select('-password') // Exclude password from the response
+        .populate('organizations');
+      
+      if (!user) {
+        throw new Error('User not found');
+      }
+      
+      return user;
+    } catch (error) {
+      console.error('Error in getUserById:', error);
+      throw error;
+    }
+  }
 
 }
 

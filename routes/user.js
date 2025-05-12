@@ -165,7 +165,7 @@ router.post('/integrator', authMiddleware, roleMiddleware('root'), userControlle
  *       500:
  *         description: Internal server error
  */
-router.post('/admin', authMiddleware, roleMiddleware('root'), userController.createAdminUser);
+router.post('/admin', authMiddleware, roleMiddleware('root', 'integrator'), userController.createAdminUser);
 
 /**
  * @swagger
@@ -232,6 +232,8 @@ router.post('/admin', authMiddleware, roleMiddleware('root'), userController.cre
  *       500:
  *         description: Internal server error
  */
+
+// router.post('/', userController.createNormalUser);
 router.post('/', authMiddleware, roleMiddleware('root', 'integrator', 'admin'), userController.createNormalUser);
 
 /**
@@ -312,5 +314,96 @@ router.post('/login', authController.login);
  *         description: Internal server error
  */
 router.get('/logout', authMiddleware, authController.logout);
+
+/**
+ * @swagger
+ * /user/check-auth:
+ *   get:
+ *     summary: Check if user is authenticated and get role
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: User is authenticated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 role:
+ *                   type: string
+ *       401:
+ *         description: User is not authenticated
+ */
+router.get('/check-auth', authMiddleware, (req, res) => {
+  res.status(200).json({  message: 'Authenticated',  role: req.user.role });
+});
+
+
+/**
+ * @swagger
+ * /user/profile:
+ *   get:
+ *     summary: Get authenticated user's profile
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User profile retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 firstName:
+ *                   type: string
+ *                 lastName:
+ *                   type: string
+ *                 phoneNumber:
+ *                   type: string
+ *                 role:
+ *                   type: string
+ *                 organizations:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *       401:
+ *         description: Unauthorized - User not authenticated
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/profile', authMiddleware, userController.getUserProfile);
+
+/**
+ * @swagger
+ * /user/organizations:
+ *   get:
+ *     summary: Get organizations for the authenticated user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of organizations the user belongs to
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Organization'
+ *       401:
+ *         description: Unauthorized - No valid authentication token
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/organizations', authMiddleware, userController.getUserOrganizations);
 
 module.exports = router;
