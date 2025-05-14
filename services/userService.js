@@ -11,7 +11,6 @@ class UserService {
   async createRootUser() {
 
   }
-
   async createUser(user_data, user_role) {
     try {
       const { username, firstname, lastname, email, phone_number, organizations, password } = user_data;
