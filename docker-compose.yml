@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     container_name: net_protect_backend
     ports:
-      - "3000:3000"
+      - "5555:3000"
     depends_on:
       - mongodb
     environment:
