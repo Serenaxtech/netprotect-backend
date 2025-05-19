@@ -9,12 +9,12 @@ const router = express.Router();
 
 router.post('/', authenticateAgent, scanResultController.createScanResult);
 
-router.get('/agent/:agent_id', scanResultController.getScanResultsByAgent);
+router.get('/agent/:agent_id',  authMiddleware, authscanResultController.getScanResultsByAgent);
 
 // router.get('/scan-name/:scanName', scanResultController.getScanResultsByScanName);
 
-router.get('/agent/:agent_id/latest', scanResultController.getLatestScanResultForAgent);
+router.get('/agent/:agent_id/latest',  authMiddleware, scanResultController.getLatestScanResultForAgent);
 
-router.delete('/agent/:agent_id', scanResultController.deleteScanResultsByAgent);
+router.delete('/agent/:agent_id',  authMiddleware, roleMiddleware(['root', 'integrator', 'admin']), scanResultController.deleteScanResultsByAgent);
 
 module.exports = router;
