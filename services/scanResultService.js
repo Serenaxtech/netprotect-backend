@@ -40,7 +40,7 @@ class ScanResultService {
 
     async getLatestScanResultForAgent(agent_id) {
         try {
-            const latestScanResult = await ScanResult.findOne({ "agentId": agent_id }).sort({ scanDate: -1 });
+            const latestScanResult = await ScanResult.findOne({ "agentId": agent_id }).sort({ createdAt: -1 });
             return latestScanResult;
         } catch (error) {
             console.error('Error fetching latest scan result:', error);
