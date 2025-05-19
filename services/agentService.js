@@ -106,11 +106,12 @@ class AgentService {
                 throw new Error('Agent not found');
             }
 
-            if ( !(role === 'root') ) {
+            if ( role !== 'root' ) {
                 if (!list_of_organizations.includes(agent.organizationId) ) {
                     throw new Error('Agent not found');
                 }
             }
+            console.log(agent);
 
             return agent;
         
@@ -204,6 +205,46 @@ class AgentService {
             return {stopped_agent: agent, revoked_token: token};
         } catch (error) {
             console.error('Error revoking token:', error);
+            throw error;
+        }
+    }
+
+    async getAgentToken(agent_id, list_of_organizations, role) {
+        try {
+            // First find the agent to verify organization membership
+            const agent = await Agent.findOne({ "agentId": agent_id }).lean();
+
+            console.log(agent);
+            
+            if (!agent) {
+                throw new Error('Agent not found');
+            }
+    
+            // Check organization membership unless user is root
+            if (role !== 'root') {
+                if (!list_of_organizations.includes(agent.organizationId)) {
+                    throw new Error('Agent not found');
+                }
+            }
+
+            console.log(list_of_organizations);
+    
+            // Find the active token for this agent
+            const agentToken = await AgentToken.findOne({
+                agent: agent._id,
+                revoked: false
+            }).lean();
+
+            console.log(agentToken);
+    
+            if (!agentToken) {
+                throw new Error('Token not found');
+            }
+    
+            return agentToken.token;
+    
+        } catch (error) {
+            console.error('Error getting agent token:', error);
             throw error;
         }
     }

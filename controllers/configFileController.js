@@ -38,14 +38,15 @@ class configFileController {
         try {
             const { agent_id } = req.params;
             const organization_ids = req.user.organizations;
+            const role = req.user.role;
 
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    
+
             if (!uuidRegex.test(agent_id)) {
                 return res.status(400).json({ message: 'Invalid agentId format' });
             }
-    
-            const agent_config_file = await configFileService.getConfigByAgentId(agent_id, organization_ids);
+
+            const agent_config_file = await configFileService.getConfigByAgentId(agent_id, organization_ids, role);
 
             res.status(201).json({
                 message: "success",
@@ -57,7 +58,7 @@ class configFileController {
                 return res.status(404).json({ message: 'Config file not found' });
             }
 
-            if (error.message === 'Agent does not exist'){
+            if (error.message === 'Agent does not exist') {
                 return res.status(404).json({ message: 'Agent does not exist' });
             }
 

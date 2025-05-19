@@ -40,6 +40,9 @@ router.get('/checkin/:agent_id', authenticateAgent, agentController.updateAgentL
 // this will not create an agent token object in the mongodb database
 router.get( '/token/create', authMiddleware, roleMiddleware('root'), agentController.createAgentAuthToken);
 
+// Get agent token for authenticated users with organization membership
+router.get('/:agent_id/token', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.getAgentToken);
+
 
 // this is replaced by the scan endpoint /api/v1/scan
 router.post( '/collector', authenticateAgent, agentController.receiveData);

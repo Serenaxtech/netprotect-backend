@@ -1,4 +1,5 @@
 const agentService = require('../services/agentService');
+const orgService = require('../services/orgService');
 
 
 class agentController {
@@ -141,7 +142,9 @@ class agentController {
             }
 
             const agent = await agentService.deleteAgentById(agent_id);
-
+            const organization = await orgService.removeAgentFromOrganization(agent.organizationId, agent_id);
+            
+            
             res.status(200).json(
                 { 
                     message: "Agent Deleted Successfully",
@@ -296,6 +299,36 @@ class agentController {
 
         } catch(error) {
             
+        }
+    }
+
+    async getAgentToken(req, res) {
+        try {
+            const { agent_id } = req.params;
+            const list_of_organizations = req.user.organizations;
+            const role = req.user.role;
+    
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    
+            if (!uuidRegex.test(agent_id)) {
+                return res.status(400).json({ message: 'Invalid agentId format' });
+            }
+    
+            const token = await agentService.getAgentToken(agent_id, list_of_organizations, role);
+    
+            res.status(200).json({
+                message: "success",
+                data: {
+                    token: token
+                }
+            });
+    
+        } catch (error) {
+            console.error('Error retrieving agent token:', error);
+            if (error.message === 'Agent not found' || error.message === 'Token not found') {
+                return res.status(404).json({ message: error.message });
+            }
+            res.status(500).json({ message: 'Internal server error' });
         }
     }
 }

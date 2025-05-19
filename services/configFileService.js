@@ -20,25 +20,39 @@ class ConfigService {
         }
     }
 
-    async getConfigByAgentId(agentId, organization_ids) {
+    async getConfigByAgentId(agentId, organization_ids, role) {
         try {
-            
-            const agent_ids = [];
-            for (const organization_id of organization_ids) {
-                const organization = await Org.findById(organization_id).lean();
-                agent_ids.push(...organization.agentIds);
-            }
-
-            if (agent_ids.includes(agentId)) {
+            // For root users, bypass organization check
+            if (role === 'root') {
                 const config = await ConfigFile.findOne({ agentId }).lean();
-
                 if (!config) {
                     throw new Error('Config file not found');
                 }
                 return config;
             }
 
-            throw new Error('Agent does not exist');
+            // For non-root users, verify organization membership
+            const agent_ids = [];
+            for (const organization_id of organization_ids) {
+                const organization = await Org.findById(organization_id).lean();
+                if (organization) {
+                    agent_ids.push(...organization.agentIds);
+                }
+            }
+
+            if (agent_ids.length === 0) {
+                throw new Error('No valid organizations found');
+            }
+
+            if (!agent_ids.includes(agentId)) {
+                throw new Error('Agent does not exist in your organizations');
+            }
+
+            const config = await ConfigFile.findOne({ agentId }).lean();
+            if (!config) {
+                throw new Error('Config file not found');
+            }
+            return config;
 
         } catch (error) {
             console.error('Error fetching config file:', error);
@@ -48,7 +62,7 @@ class ConfigService {
 
     async updateConfigFile(agentId, rawConfig, organization_ids) {
         try {
-
+                // add root option
             const agent_ids = [];
             for (const organization_id of organization_ids) {
                 const organization = await Org.findById(organization_id).lean();
