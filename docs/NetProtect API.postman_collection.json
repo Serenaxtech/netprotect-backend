@@ -18,7 +18,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{URL}}/api/v1/agent/93657d00-67e5-4904-abd6-14e39b552690/config",
+									"raw": "{{URL}}/api/v1/agent/1bc42351-fab4-47ea-b9d4-722e8eb827a3/config",
 									"host": [
 										"{{URL}}"
 									],
@@ -26,8 +26,29 @@
 										"api",
 										"v1",
 										"agent",
-										"93657d00-67e5-4904-abd6-14e39b552690",
+										"1bc42351-fab4-47ea-b9d4-722e8eb827a3",
 										"config"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Config File By Agent ID Token",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/agent/1bc42351-fab4-47ea-b9d4-722e8eb827a3/token",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"agent",
+										"1bc42351-fab4-47ea-b9d4-722e8eb827a3",
+										"token"
 									]
 								}
 							},
@@ -303,7 +324,7 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": "{{URL}}/api/v1/agent/7045d69b-089f-4ef2-99c4-dd409db1bdf1",
+											"raw": "{{URL}}/api/v1/agent/",
 											"host": [
 												"{{URL}}"
 											],
@@ -311,7 +332,7 @@
 												"api",
 												"v1",
 												"agent",
-												"7045d69b-089f-4ef2-99c4-dd409db1bdf1"
+												""
 											]
 										}
 									},
@@ -596,7 +617,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690",
+							"raw": "{{URL}}/api/v1/scan/agent/1e06d0e8-b5fe-4edd-a6e5-d5cd4d714dc5",
 							"host": [
 								"{{URL}}"
 							],
@@ -605,7 +626,7 @@
 								"v1",
 								"scan",
 								"agent",
-								"93657d00-67e5-4904-abd6-14e39b552690"
+								"1e06d0e8-b5fe-4edd-a6e5-d5cd4d714dc5"
 							]
 						}
 					},
@@ -617,7 +638,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/api/v1/scan/agent/93657d00-67e5-4904-abd6-14e39b552690/latest",
+							"raw": "{{URL}}/api/v1/scan/agent/1e06d0e8-b5fe-4edd-a6e5-d5cd4d714dc5/latest",
 							"host": [
 								"{{URL}}"
 							],
@@ -626,7 +647,7 @@
 								"v1",
 								"scan",
 								"agent",
-								"93657d00-67e5-4904-abd6-14e39b552690",
+								"1e06d0e8-b5fe-4edd-a6e5-d5cd4d714dc5",
 								"latest"
 							]
 						}
@@ -669,7 +690,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\":\"integrator@hotmail.com\",\r\n    \"password\":\"Password123\"\r\n}",
+									"raw": "{\r\n    \"email\":\"root@hotmail.com\",\r\n    \"password\":\"Password123\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -856,6 +877,33 @@
 								"v1",
 								"user",
 								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"root@hotmail.com\",\r\n    \"password\":\"Password123\"\r\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/user/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"all"
 							]
 						}
 					},
