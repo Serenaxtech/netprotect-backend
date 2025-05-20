@@ -1,4 +1,5 @@
 const userService = require("../services/userService");
+const User = require("../models/userModel");
 
 class UserController {
   // Can be used only by the root user
@@ -150,6 +151,19 @@ class UserController {
         return res.status(404).json({ message: 'User not found' });
       }
       
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  async getAllUsers(req, res) {
+    try {
+      const users = await User.find()
+        .select('-password')
+        .populate('organizations');
+      
+      res.status(200).json(users);
+    } catch (error) {
+      console.error('Error in getAllUsers:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
   }

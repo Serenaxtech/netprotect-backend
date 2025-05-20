@@ -12,7 +12,7 @@ router.get('/', authenticateAgent, function(req, res, next) {
     res.json({message: "Agent Authenticated"});
 });
 
-router.post( '/create', authMiddleware, roleMiddleware('root'), agentController.createAgent);
+router.post( '/create', authMiddleware, roleMiddleware('root', 'integrator'), agentController.createAgent);
 
 // Only root account
 router.get('/root/all',authMiddleware, roleMiddleware('root'), agentController.getAllAgents);
@@ -22,7 +22,7 @@ router.get('/root/all',authMiddleware, roleMiddleware('root'), agentController.g
 router.get('/all',authMiddleware, roleMiddleware('admin', 'integrator'), agentController.getAllAgentsByOrganizations);
 
 // Get Agent By ID, this endpoint is for admin and integrator role
-router.get('/:agent_id', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.getAgentById);
+router.get('/:agent_id', authMiddleware, roleMiddleware('root', 'admin', 'integrator', 'user'), agentController.getAgentById);
 router.put('/:agent_id', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), agentController.updateAgentById);
 
 // Only root account can revoke tokens
@@ -50,7 +50,7 @@ router.post( '/collector', authenticateAgent, agentController.receiveData);
 // ? TO DO - Endpoint to send the config file to the agent
 // ? if the remote configuration is allowed
 router.get( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.getConfigByAgentId);
-router.post( '/:agent_id/config', authMiddleware, roleMiddleware('root'), configFileController.createConfigFile);
+router.post( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.createConfigFile);
 router.put( '/:agent_id/config', authMiddleware, roleMiddleware('root', 'admin', 'integrator'), configFileController.updateConfigFile);
 router.delete( '/:agent_id/config', authMiddleware, roleMiddleware('root'), configFileController.deleteConfigFile);
 

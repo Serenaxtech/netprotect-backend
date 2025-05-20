@@ -406,4 +406,47 @@ router.get('/profile', authMiddleware, userController.getUserProfile);
  */
 router.get('/organizations', authMiddleware, userController.getUserOrganizations);
 
+/**
+ * @swagger
+ * /user/all:
+ *   get:
+ *     summary: Get all users in the system
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of all users retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   username:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   firstName:
+ *                     type: string
+ *                   lastName:
+ *                     type: string
+ *                   phoneNumber:
+ *                     type: string
+ *                   role:
+ *                     type: string
+ *                   organizations:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *       401:
+ *         description: Unauthorized - No valid authentication token
+ *       403:
+ *         description: Forbidden - Requires root role
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/all', authMiddleware, roleMiddleware('root'), userController.getAllUsers);
+
 module.exports = router;
